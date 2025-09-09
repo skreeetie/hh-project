@@ -31,6 +31,11 @@ export const VacanciesList = () => {
             onChange={({ target: { value } }) => {
               setSearchValue(value);
             }}
+            onKeyDown={({ key }) => {
+              if (key === "Enter") {
+                setSearchText(searchValue);
+              }
+            }}
           />
           <Button
             classNames={{ label: style.label }}
