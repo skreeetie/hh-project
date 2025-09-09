@@ -1,8 +1,8 @@
 import { MultiSelect } from "@mantine/core";
 import Map from "../../assets/area.svg?react";
 import style from "./style.module.scss";
-import { useTypedDispatch, useTypedSelector } from "../../hooks/redux";
-import { setAreas } from "../../reducers/AreaSlice/AreaSlice";
+import { useTypedDispatch, useTypedSelector } from "../../redux/hooks/redux";
+import { setAreas } from "../../redux/reducers/AreaSlice/AreaSlice";
 
 export const Area = () => {
   const dispatch = useTypedDispatch();

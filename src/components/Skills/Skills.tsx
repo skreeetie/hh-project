@@ -3,12 +3,12 @@ import Add from "../../assets/add.svg?react";
 import style from "./style.module.scss";
 import { Remove } from "../../shared/Remove/Remove";
 import { useState } from "react";
-import { useTypedDispatch, useTypedSelector } from "../../hooks/redux";
+import { useTypedDispatch, useTypedSelector } from "../../redux/hooks/redux";
 import { v4 as uuidv4 } from "uuid";
 import {
   addToSkills,
   removeFromSkills,
-} from "../../reducers/SkillsSlice/SkillsSlice";
+} from "../../redux/reducers/SkillsSlice/SkillsSlice";
 
 export const Skills = () => {
   const [value, setValue] = useState<string>("");

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import type { Skill } from "../../env/skills.env";
+import type { Skill } from "../../../env/skills.env";
 import { v4 as uuidv4 } from "uuid";
 
 interface SkillsState {

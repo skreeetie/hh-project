@@ -1,16 +1,19 @@
 import { configureStore } from "@reduxjs/toolkit";
 import skillsReducer from "../reducers/SkillsSlice/SkillsSlice";
 import areaReducer from "../reducers/AreaSlice/AreaSlice";
-import vacanciesReducer from "../reducers/VacanciesSlice/VacanciesSlice";
+import { vacanciesApi } from "../reducers/VacanciesApi/VacanciesApi";
 import pageReducer from "../reducers/PageSlice/PageSlice";
 
 export const store = configureStore({
   reducer: {
     skills: skillsReducer,
     area: areaReducer,
-    vacancies: vacanciesReducer,
+    vacanciesApi: vacanciesApi.reducer,
     page: pageReducer,
   },
+
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(vacanciesApi.middleware),
 });
 
 export type AppDispatch = typeof store.dispatch;

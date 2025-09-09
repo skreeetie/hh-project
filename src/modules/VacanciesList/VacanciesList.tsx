@@ -4,28 +4,15 @@ import style from "./style.module.scss";
 import { Skills } from "../../components/Skills/Skills";
 import { Area } from "../../components/Area/Area";
 import { Vacancy } from "../../components/Vacancy/Vacancy";
-import { useTypedDispatch, useTypedSelector } from "../../hooks/redux";
-import { useEffect, useState } from "react";
-import { fetchVacancies } from "../../reducers/VacanciesSlice/VacanciesThunk";
+import { useState } from "react";
 import { PaginationFooter } from "../../components/PaginationFooter/PaginationFooter";
+import { useUrl } from "../../hooks/useUrl";
+import { useGetFilteredVacanciesQuery } from "../../redux/reducers/VacanciesApi/VacanciesApi";
 
 export const VacanciesList = () => {
-  const dispatch = useTypedDispatch();
-  const vacanciesList = useTypedSelector(
-    (state) => state.vacancies.vacanciesList
-  );
-  const activePage = useTypedSelector((state) => state.page.activePage);
-  const [searchText, setSearchText] = useState<string>("");
+  const { url, setSearchText } = useUrl();
   const [searchValue, setSearchValue] = useState<string>("");
-  const areasQuery = useTypedSelector((state) => state.area.areasQuery);
-  const skillsQuery = useTypedSelector((state) => state.skills.skillsQuery);
-  useEffect(() => {
-    dispatch(
-      fetchVacancies(
-        `https://api.hh.ru/vacancies?industry=7&professional_role=96&per_page=10&page=${activePage}&text=${searchText}${skillsQuery}${areasQuery}`
-      )
-    );
-  }, [dispatch, activePage, searchText, areasQuery, skillsQuery]);
+  const { data: vacanciesList } = useGetFilteredVacanciesQuery(url);
   return (
     <section className={style.section}>
       <div className={style.top}>
@@ -65,21 +52,22 @@ export const VacanciesList = () => {
           <Area />
         </div>
         <div className={style.list}>
-          {vacanciesList.map((item) => {
-            return (
-              <Vacancy
-                key={item.id}
-                name={item.name}
-                exp_id={item.experience.id}
-                alternate={item.alternate_url}
-                employer={item.employer.name}
-                salary={item.salary}
-                place={item.area.name}
-                work_format={item.work_format}
-              />
-            );
-          })}
-          <PaginationFooter />
+          {vacanciesList &&
+            vacanciesList.items.map((item) => {
+              return (
+                <Vacancy
+                  key={item.id}
+                  name={item.name}
+                  exp_id={item.experience.id}
+                  alternate={item.alternate_url}
+                  employer={item.employer.name}
+                  salary={item.salary}
+                  place={item.area.name}
+                  work_format={item.work_format}
+                />
+              );
+            })}
+          <PaginationFooter vacanciesLength={vacanciesList?.items.length} />
         </div>
       </div>
     </section>

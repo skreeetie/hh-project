@@ -1,6 +1,6 @@
 import { render as testingLibraryRender } from "@testing-library/react";
 import { Provider } from "react-redux";
-import { store } from "../store/store";
+import { store } from "../redux/store/store";
 import { MantineProvider } from "@mantine/core";
 import { theme } from "../theme.env";
 
